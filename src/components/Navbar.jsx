@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Navbar.css'
 
-import { AuthContext } from '../context/auth.context'
+import { AuthContext } from '../context/Auth.context'
 import { useTheme } from './ThemeContext'
 
 const Navbar = () => {
@@ -29,7 +29,6 @@ const Navbar = () => {
         {isLoggedIn && (
           <div className={`navbar-links ${isOpen ? 'active' : ''}`}>
             <Link to="/">Home</Link>
-            <Link to="/flights">Flights</Link>
             <Link onClick={logOutUser}>Logout</Link>
             <Link to="/cart">
               <span>{user && user.name}</span>

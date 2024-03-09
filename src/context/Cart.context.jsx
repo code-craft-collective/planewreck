@@ -33,14 +33,32 @@ const CartContextProvider = (props) => {
 
   const getTotalCartAmount = () => {
     let totalAmount = 0
+
     for (const ticket in cart) {
       if (cart[ticket] > 0) {
-        let ticketData = initData.find((t) => t._id === ticket)
-        if (ticketData) {
-          totalAmount += ticketData.price * cart[ticket]
+        let ticketPrice
+
+        switch (ticket) {
+          case 'businessOptimaId':
+            ticketPrice = 990
+            break
+          case 'businessComfortId':
+            ticketPrice = 1100
+            break
+          case 'businessFlexibleId':
+            ticketPrice = 1280
+            break
+          case 'businessFullFlexibleId':
+            ticketPrice = 1480
+            break
+          default:
+            break
         }
+
+        totalAmount += ticketPrice * cart[ticket]
       }
     }
+
     return totalAmount
   }
 
