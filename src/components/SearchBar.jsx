@@ -33,7 +33,7 @@ const SearchBar = (props) => {
   }
 
   return (
-    <div className="h-56 my-10 py-5 px-20 border border-3 rounded-lg bg-gray-300 backdrop-opacity-50">
+    <div className="h-56 my-10 mx-40 py-5 px-20 border border-3 rounded-lg bg-gray-300 backdrop-opacity-50">
       <div className="flex flex-row justify-between my-5">
         <div className="flex flex-row justify-between">
           <div className="mx-2">
@@ -82,7 +82,9 @@ const SearchBar = (props) => {
                 key={i}
                 name="type"
                 label={label}
-                onChange={(e) => console.log(`Value: ${e.target.value}, Label: ${label}`)}
+                onChange={(e) =>
+                  console.log(`Value: ${e.target.value}, Label: ${label}`)
+                }
               />
             )
           })}

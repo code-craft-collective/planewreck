@@ -1,8 +1,8 @@
-import  "../components/FirstStep.css"
+import '../components/FirstStep.css'
 
 const FirstStep = () => {
   return (
-    <div className="boxes">
+    <div className="boxes px-32">
       <div className="box find-box">
         <h1>01</h1>
         <h2 className="h2">FIND</h2>
