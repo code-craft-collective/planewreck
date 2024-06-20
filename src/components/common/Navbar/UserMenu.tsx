@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 import NavbarLink from './NavbarLinks';
@@ -10,7 +9,7 @@ type UserMenuProps = {
 
 const links = [
   { to: '/', label: 'Home' },
-  { to: '/cart', label: 'Cart' },
+  { to: '/comparison', label: 'Compare Tickets' },
 ];
 
 function UserMenu({ logOutUser, isOpen }: UserMenuProps) {

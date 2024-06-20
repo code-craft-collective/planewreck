@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/Auth.context';
 import ProfileCard from '../components/cards/ProfileCard';
@@ -7,8 +7,6 @@ import TransactionsTable from '../components/utilities/TransactionsTable';
 function ProfilePage() {
   const { authenticateUser, isLoggedIn, isLoading } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  console.log('authenticaedUser', authenticateUser);
 
   useEffect(() => {
     if (!isLoggedIn) {

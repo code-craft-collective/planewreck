@@ -1,41 +1,36 @@
-import React from 'react';
 import Time from '../../utils/time';
 
-import ticketSlider from '../../assets/ticket-slider.png';
-
-interface TicketFlightInfoProps {
-  icon: string;
+type TicketFlightInfoProps = {
   depTimestamp: string;
-  arrivalTimestamp: string;
-  depCity: string;
-  destination: string;
-}
+  returnTimestamp: string;
+  city: string;
+  flightNumber: string;
+  airline: string;
+};
 
 function TicketFlightInfo(props: TicketFlightInfoProps) {
-  const { icon, depTimestamp, arrivalTimestamp, depCity, destination } = props;
+  const { depTimestamp, returnTimestamp, city, flightNumber, airline } = props;
 
   const depTime = Time.getTime(depTimestamp);
   const depDate = Time.getDate(depTimestamp);
-
-  const arrivalTime = Time.getTime(arrivalTimestamp);
-  const arrivalDate = Time.getDate(arrivalTimestamp);
+  const returnTime = Time.getTime(returnTimestamp);
+  const returnDate = Time.getDate(returnTimestamp);
 
   return (
     <div>
-      <div className="flex flex-row items-center">
-        <img src={icon} />
-        <div className="w-24">
-          <p className="text-lg font-thin">{depTime}</p>
-          <p className="text-sm font-thin">{depDate}</p>
-          <p className="text-sm font-thin">{depCity}</p>
+      <div className="flex flex-col items-center">
+        <div className="w-full my-5">
+          <p className="text-3xl font-bold">{airline}</p>
         </div>
-        <div className="mx-2">
-          <img src={ticketSlider} alt="slider" />
-        </div>
-        <div className="w-24">
-          <p className="text-lg font-thin">{arrivalTime}</p>
-          <p className="text-sm font-thin">{arrivalDate}</p>
-          <p className="text-sm font-thin">{destination}</p>
+        <div className="w-full text-lg font-thin">
+          <p className="">City of destination: {city}</p>
+          <p className="">
+            Departure: {depDate} - {depTime}
+          </p>
+          <p className="">
+            Return: {returnDate} - {returnTime}
+          </p>
+          <p className="">Flight number: {flightNumber}</p>
         </div>
       </div>
     </div>

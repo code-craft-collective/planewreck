@@ -1,51 +1,86 @@
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { CompareTicketsContextType } from '../../types';
+import { CompareTicketsContext } from '../../context/CompareTickets.context';
+import { DataSourceContext } from '../../context/DataSource.context';
+import { Button, Toast, Alert } from 'react-daisyui';
+import Pagination from '../common/Pagination';
+
 import FlightCards from './FlightCards';
-import { Flight } from '../../types';
 
-// const STOPS = ['Direct', '1 Stop', '2+ Stops'];
-// const DepTimes = [
-//   { type: 'Outbound', time: '12:00 AM - 11:59 PM' },
-//   { type: 'Return', time: '12:00 AM - 11:59 PM' },
-// ];
-// const RATINGS = [
-//   'Food',
-//   'Service',
-//   'Cleanliness',
-//   'Seat Space',
-//   'Security Check',
-// ];
+function Flights() {
+  const [isTicketAdded, setIsTicketAdded] = useState(false);
+  const { findFlightById } = useContext(
+    CompareTicketsContext
+  ) as CompareTicketsContextType;
 
-type FlightsProps = {
-  filteredResults: Flight[];
-};
+  const { allFlights, isLoading, currentPage, setCurrentPage, totalPages } =
+    useContext(DataSourceContext);
 
-function Flights(props: FlightsProps) {
-  const { filteredResults } = props;
+  const handleTicketComparison = (ticketId: string) => {
+    findFlightById(ticketId);
 
-  // const [open, setOpen] = useState(0)
+    setIsTicketAdded(true);
+    setTimeout(() => {
+      setIsTicketAdded(false);
+    }, 3000);
+  };
 
-  // const handleOpen = (value) => setOpen(open === value ? 0 : value)
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
-  const [setIsLoading] = useState(false);
-  const [setIsSuccess] = useState(false);
-  const [setErrorMessage] = useState('');
+  const startIndex = (currentPage - 1) * 10;
+  const endIndex = startIndex + 10;
+  const currentFlights = allFlights.flights.slice(startIndex, endIndex);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <div className="flex flex-row justify-between my-10 ">
-        <div>
-          {filteredResults.map((flight) => (
-            <FlightCards
-              key={flight._id}
-              flight={flight}
-              setIsLoading={setIsLoading}
-              setIsSuccess={setIsSuccess}
-              setErrorMessage={setErrorMessage}
-            />
-          ))}
+    <div className="flex flex-col justify-center items-center">
+      <div>
+        <div className="flex flex-row justify-center">
+          <div className="text-2xl font-semibold">
+            Departure City: {allFlights.departure}
+          </div>
         </div>
-        <div className="mx-20 mb-2 rounded-lg border border-blue-gray-100 px-4 ">
-          <div>Filter functions</div>
+      </div>
+      <div className="flex flex-row justify-center my-10 ">
+        <div>
+          {isTicketAdded && (
+            <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50">
+              <Toast>
+                <Alert status="info" className="bg-blue-300 p-5 rounded-md">
+                  <div>Ticket added to comparison</div>
+                </Alert>
+              </Toast>
+            </div>
+          )}
+          <div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+          {currentFlights.map((flight) => (
+            <div key={flight._id} className="flex flex-row items-center">
+              <FlightCards flight={flight} />
+              <Button
+                onClick={() => handleTicketComparison(flight._id)}
+                className="mx-3 h-2 w-4 text-4xl"
+                variant="outline"
+              >
+                +
+              </Button>
+            </div>
+          ))}
         </div>
       </div>
     </div>

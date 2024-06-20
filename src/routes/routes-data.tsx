@@ -1,27 +1,54 @@
+import ProtectedRoute from './ProtectedRoutes';
 import HomePage from '../pages/HomePage';
-import ErrorPage from '../pages/ErrorPage';
-// import AboutPage from '../Pages/AboutPage';
+import AboutPage from '../pages/AboutPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
-// import Cart from '../Pages/Cart';
-// import ConfirmationPage from '../Pages/ConfirmationPage';
-import FlightsPage from '../components/flights/Flights';
-// import ResultPage from '../Pages/ResultsPage';
 import ProfilePage from '../pages/ProfilePage';
 import EditProfilePage from '../pages/EditProfile';
+import ComparisonPage from '../pages/ComparisonPage';
+import SuccessConfirmation from '../components/cart/SuccessConfirmation';
 
-export const routes = [
-  { path: '/', Element: HomePage },
-  // { path: '/about', Element: AboutPage },
-  { path: '/signup', Element: SignupPage },
-  { path: '/login', Element: LoginPage },
-  // { path: '/cart', Element: Cart },
-  // { path: '/confirmation', Element: ConfirmationPage },
-  { path: '/flights', Element: FlightsPage },
-  // { path: '/resultpage', Element: ResultPage },
-  { path: '/profile', Element: ProfilePage },
-  { path: '/edit-profile/:id', Element: EditProfilePage },
-  { path: '*', Element: ErrorPage },
-];
+function routes() {
+  return [
+    { path: '/', element: <HomePage /> },
+    { path: '/about', element: <AboutPage /> },
+    { path: '/signup', element: <SignupPage /> },
+    { path: '/login', element: <LoginPage /> },
+
+    {
+      path: '/profile',
+      element: (
+        <ProtectedRoute>
+          <ProfilePage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/comparison',
+      element: (
+        <ProtectedRoute>
+          <ComparisonPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/edit-profile/:id',
+      element: (
+        <ProtectedRoute>
+          <EditProfilePage />
+        </ProtectedRoute>
+      ),
+    },
+
+    {
+      path: '/success',
+      element: (
+        <ProtectedRoute>
+          <SuccessConfirmation />
+        </ProtectedRoute>
+      ),
+    },
+  ];
+}
 
 export default routes;
